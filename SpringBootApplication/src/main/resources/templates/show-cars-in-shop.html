@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>
+    <td th:text="${shop.shopName}"></td>
+</h2>
+<br>
+
+<table>
+    <th>Brand</th>
+    <th>Model</th>
+    <th:block th:each="car : ${cars}">
+        <tr>
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td>
+                <a th:href="@{/__${shop.shopId}__/__${car.carId}__}">
+                    <input type="button" value="Info">
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/delete/__${shop.shopId}__/__${car.carId}__}">
+                    <input type="button" value="Delete">
+                </a>
+            </td>
+        </tr>
+    </th:block>
+</table>
+<br>
+
+<a th:href="@{/__${shop.shopId}__/add}">
+    <input type="button" value="Add">
+</a>
+<br>
+
+<a th:href="@{/}">
+    <input type="button" value="Back to shops">
+</a>
+
+</body>
+</html>

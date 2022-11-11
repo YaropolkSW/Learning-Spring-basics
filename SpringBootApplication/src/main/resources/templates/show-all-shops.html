@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>SHOPS</h2>
+<br>
+
+<table>
+<th:block th:each="shop : ${shops}">
+    <tr>
+        <td th:text="${shop.shopName}"></td>
+        <td>
+            <a th:href="@{/{path}(path=${shop.shopId})}">
+                <input type="button" value=">>">
+            </a>
+        </td>
+    </tr>
+</th:block>
+</table>
+
+</body>
+</html>
