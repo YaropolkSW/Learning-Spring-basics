@@ -6,37 +6,32 @@ import com.spring.springboot.springbootapplication.entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShopService {
 
-    @Autowired
+    private static final String NO_SUCH_SHOP_EXC_MESSAGE = "There is no shop with Id = %s";
+
     private ShopDAO shopDAO;
 
+    @Autowired
+    public ShopService(final ShopDAO shopDAO) {
+        this.shopDAO = shopDAO;
+    }
+
     public List<ShopDTO> getAllShops() {
-        final List<Shop> shops = shopDAO.findAll();
-        final List<ShopDTO> shopsDTO = new ArrayList<>();
-
-        for (final Shop shop : shops) {
-            final ShopDTO shopDTO = new ShopDTO();
-
-            shopDTO.setShopId(shop.getShopId());
-            shopDTO.setShopName(shop.getShopName());
-
-            shopsDTO.add(shopDTO);
-        }
+        final List<ShopDTO> shopsDTO = shopDAO.findAll().stream().map(ShopDTO::of).collect(Collectors.toList());
 
         return shopsDTO;
     }
 
-    public ShopDTO getShopById(final int id) {
-        final Shop shop = shopDAO.getShopByShopId(id);
-        final ShopDTO shopDTO = new ShopDTO();
-
-        shopDTO.setShopId(shop.getShopId());
-        shopDTO.setShopName(shop.getShopName());
+    public ShopDTO getShopById(final int shopId) {
+        final ShopDTO shopDTO = ShopDTO.of(shopDAO.findById(shopId).orElseThrow(() ->
+                new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId))));
 
         return shopDTO;
     }
