@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,15 +81,5 @@ public class CarService {
                 .build();
 
         carDAO.save(car);
-
-//        final Shop shop = shopDAO
-//                .findById(shopId)
-//                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)));
-//
-//        final List<Car> cars = shop.getCars();
-//
-//        cars.add(car);
-//        shop.setCars(cars);
-//        shopDAO.save(shop);
     }
 }

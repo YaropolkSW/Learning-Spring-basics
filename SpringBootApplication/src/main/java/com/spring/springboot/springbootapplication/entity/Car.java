@@ -3,7 +3,6 @@ package com.spring.springboot.springbootapplication.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 @Entity

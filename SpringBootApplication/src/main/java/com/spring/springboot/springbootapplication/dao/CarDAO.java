@@ -6,9 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
-import java.util.List;
-
 public interface CarDAO extends JpaRepository<Car, Integer> {
     @Modifying
     @Query(value = "UPDATE client SET car_id = NULL WHERE car_id = :carId", nativeQuery = true)

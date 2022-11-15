@@ -2,35 +2,28 @@ package com.spring.springboot.springbootapplication.controller;
 
 import com.spring.springboot.springbootapplication.dao.CarDAO;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
-import com.spring.springboot.springbootapplication.dto.ShopDTO;
 import com.spring.springboot.springbootapplication.service.CarService;
 import com.spring.springboot.springbootapplication.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 public class CarController {
 
     private final CarService carService;
-    private final ShopService shopService;
     private final CarDAO carDAO;
 
     @Autowired
     public CarController(
             final CarService carService,
-            final ShopService shopService,
             final CarDAO carDAO
     ) {
 
         this.carService = carService;
-        this.shopService = shopService;
         this.carDAO = carDAO;
     }
 
