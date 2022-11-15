@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
 <h2>Full information</h2>
@@ -19,12 +19,12 @@
 </table>
 <br>
 
-<a th:href="@{/__${shopId}__}">
+<a th:href="@{/shop/__${shopId}__}">
     <input type="button" value="Back to cars">
 </a>
 <br>
 
-<a th:href="@{/}">
+<a th:href="@{/shop}">
     <input type="button" value="Back to shops">
 </a>
 

@@ -2,25 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<h2>
-    <td th:text="${shop.shopName}"></td>
-</h2>
-<br>
+<h2>ALL CARS</h2>
 
 <table>
     <th>Brand</th>
     <th>Model</th>
+    <th>Age Of Produce</th>
+    <th>Price</th>
     <th:block th:each="car : ${cars}">
         <tr>
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
+            <td th:text="${car.ageOfProduce}"></td>
+            <td th:text="${car.price}"></td>
             <td>
-                <a th:href="@{/shop/__${shop.shopId}__/__${car.carId}__}">
-                    <input type="button" value="Info">
-                </a>
-            </td>
-            <td>
-                <form th:method="DELETE" th:action="@{/shop/remove/__${shop.shopId}__/__${car.carId}__}">
+                <form th:method="DELETE" th:action="@{/shop/all_cars/delete/__${car.carId}__}">
                     <button type="submit">Delete</button>
                 </form>
             </td>
@@ -29,8 +25,8 @@
 </table>
 <br>
 
-<a th:href="@{/shop/__${shop.shopId}__/add_car_to_shop}">
-    <input type="button" value="Add car to shop">
+<a th:href="@{/shop/all_cars/add_new_car}">
+    <input type="button" value="Add new car">
 </a>
 <br>
 

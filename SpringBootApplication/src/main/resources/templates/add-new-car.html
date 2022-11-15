@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
 <h2>Please, fill information about car</h2>
 <br>
 
-<form method="post" th:action="@{/__${shopId}__/save}" th:object="${car}">
+<form method="POST" th:action="@{/shop/all_cars/save_new_car}" th:object="${car}">
     <table>
         <tr>
             <td>Brand</td>
@@ -41,15 +41,15 @@
     </table>
     <br>
 
-    <input type="submit" value="Save">
+    <input type="submit" value="Save new car">
 </form>
 
-<a th:href="@{/__${shopId}__}">
+<a th:href="@{/shop/all_cars}">
     <input type="button" value="Back to cars">
 </a>
 <br>
 
-<a th:href="@{/}">
+<a th:href="@{/shop}">
     <input type="button" value="Back to shops">
 </a>
 

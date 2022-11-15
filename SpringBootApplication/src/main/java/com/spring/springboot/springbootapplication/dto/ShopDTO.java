@@ -1,25 +1,24 @@
 package com.spring.springboot.springbootapplication.dto;
 
 import com.spring.springboot.springbootapplication.entity.Shop;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ShopDTO {
     private int shopId;
 
     private String shopName;
 
     public static ShopDTO of(final Shop shop) {
-        final ShopDTO shopDTO = new ShopDTO();
-
-        shopDTO.setShopId(shop.getShopId());
-        shopDTO.setShopName(shop.getShopName());
+        final ShopDTO shopDTO = ShopDTO.builder()
+                .shopId(shop.getShopId())
+                .shopName(shop.getShopName())
+                .build();
 
         return shopDTO;
     }

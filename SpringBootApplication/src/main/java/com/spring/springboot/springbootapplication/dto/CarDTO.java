@@ -8,8 +8,10 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class CarDTO {
     private int carId;
 
@@ -26,14 +28,19 @@ public class CarDTO {
     private int price;
 
     public static CarDTO of(final Car car) {
-        final CarDTO carDTO = new CarDTO();
-
-        carDTO.setCarId(car.getCarId());
-        carDTO.setBrand(car.getBrand());
-        carDTO.setModel(car.getModel());
-        carDTO.setAgeOfProduce(car.getAgeOfProduce());
-        carDTO.setPrice(car.getPrice());
+        final CarDTO carDTO = CarDTO.builder()
+                .carId(car.getCarId())
+                .brand(car.getBrand())
+                .model(car.getModel())
+                .ageOfProduce(car.getAgeOfProduce())
+                .price(car.getPrice())
+                .build();
 
         return carDTO;
+    }
+
+    @Override
+    public String toString() {
+        return brand + " " + model;
     }
 }
