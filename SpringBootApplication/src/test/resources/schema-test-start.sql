@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS shop CASCADE;
 
 CREATE TABLE IF NOT EXISTS shop(
-    shop_id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     shop_name VARCHAR(50) NOT NULL
     );
 
@@ -14,7 +14,7 @@ VALUES('Subaru Official Dealer'),
 DROP TABLE IF EXISTS car CASCADE;
 
 CREATE TABLE IF NOT EXISTS car(
-    car_id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     brand VARCHAR(15) NOT NULL,
     model VARCHAR(15) NOT NULL,
     age_of_produce INT NOT NULL,
@@ -34,11 +34,11 @@ VALUES('Subaru', 'Outback', 2022, 6000000),
 DROP TABLE IF EXISTS client;
 
 CREATE TABLE IF NOT EXISTS client(
-    client_id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     client_name VARCHAR(20) NOT NULL,
     city VARCHAR(20) NOT NULL,
     car_id INT,
-    FOREIGN KEY (car_id) REFERENCES car (car_id)
+    FOREIGN KEY (car_id) REFERENCES car (id)
     );
 
 INSERT INTO client(client_name, city, car_id)
@@ -52,8 +52,8 @@ DROP TABLE IF EXISTS shop_car;
 CREATE TABLE IF NOT EXISTS shop_car(
     shop_id INT NOT NULL,
     car_id INT,
-    FOREIGN KEY (shop_id) REFERENCES shop (shop_id),
-    FOREIGN KEY (car_id) REFERENCES car (car_id)
+    FOREIGN KEY (shop_id) REFERENCES shop (id),
+    FOREIGN KEY (car_id) REFERENCES car (id)
     );
 
 INSERT INTO shop_car(shop_id, car_id)
