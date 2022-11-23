@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Full information</h2>
+<br>
+
+<table>
+    <th>Brand</th>
+    <th>Model</th>
+    <th>Age of produce</th>
+    <th>Price</th>
+    <tr>
+        <td th:text="${car.brand}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.ageOfProduce}"></td>
+        <td th:text="${car.price}"></td>
+    </tr>
+</table>
+<br>
+
+<a th:href="@{/shop/__${shopId}__}">
+    <input type="button" value="Back to cars">
+</a>
+<br>
+
+<a th:href="@{/shop}">
+    <input type="button" value="Back to shops">
+</a>
+
+</body>
+</html>

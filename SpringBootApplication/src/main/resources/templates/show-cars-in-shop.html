@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>
+    <td th:text="${shop.shopName}"></td>
+</h2>
+<br>
+
+<table>
+    <th>Brand</th>
+    <th>Model</th>
+    <th:block th:each="car : ${cars}">
+        <tr>
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td>
+                <a th:href="@{/shop/__${shop.id}__/car/__${car.id}__}">
+                    <input type="button" value="Info">
+                </a>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/shop/remove/__${shop.id}__/__${car.id}__}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+</table>
+<br>
+
+<a th:href="@{/shop/__${shop.id}__/add_car_to_shop}">
+    <input type="button" value="Add car to shop">
+</a>
+<br>
+
+<a th:href="@{/shop}">
+    <input type="button" value="Back to shops">
+</a>
+
+</body>
+</html>

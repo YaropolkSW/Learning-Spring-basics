@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Please, fill information about car</h2>
+<br>
+
+<form method="POST" th:action="@{/shop/all_cars/save_new_car}" th:object="${car}">
+    <table>
+        <tr>
+            <td>Brand</td>
+            <td>
+                <input id="brand" required type="text" th:field="*{brand}" />
+            </td>
+            <td th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></td>
+        </tr>
+
+        <tr>
+            <td>Model</td>
+            <td>
+                <input id="model" required type="text" th:field="*{model}" />
+            </td>
+            <td th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></td>
+        </tr>
+
+        <tr>
+            <td>Age of produce</td>
+            <td>
+                <input id="ageOfProduce" required type="text" th:field="*{ageOfProduce}" />
+            </td>
+            <td th:if="${#fields.hasErrors('ageOfProduce')}" th:errors="*{ageOfProduce}"></td>
+        </tr>
+
+        <tr>
+            <td>Price</td>
+            <td>
+                <input id="price" required type="text" th:field="*{price}" />
+            </td>
+            <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></td>
+        </tr>
+    </table>
+    <br>
+
+    <input type="submit" value="Save new car">
+</form>
+
+<a th:href="@{/shop/all_cars}">
+    <input type="button" value="Back to cars">
+</a>
+<br>
+
+<a th:href="@{/shop}">
+    <input type="button" value="Back to shops">
+</a>
+
+</body>
+</html>
