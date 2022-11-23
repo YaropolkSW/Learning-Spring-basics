@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class CarDTO {
-    private int carId;
+    private int id;
 
     @Size(min = 1, message = "Minimum size of field is one character")
     private String brand;
@@ -28,15 +28,13 @@ public class CarDTO {
     private int price;
 
     public static CarDTO of(final Car car) {
-        final CarDTO carDTO = CarDTO.builder()
-                .carId(car.getCarId())
+        return CarDTO.builder()
+                .id(car.getId())
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .ageOfProduce(car.getAgeOfProduce())
                 .price(car.getPrice())
                 .build();
-
-        return carDTO;
     }
 
     @Override

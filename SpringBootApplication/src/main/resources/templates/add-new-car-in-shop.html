@@ -4,16 +4,16 @@
 
 <h2>Which car do you want to add in<br><td th:text="${shop.shopName}">?</td></h2>
 
-<form th:method="POST" th:action="@{/shop/__${shopId}__/save_car_to_shop}" th:object="${cars}">
+<form th:method="POST" th:action="@{/shop/__${shop.id}__/save_car_to_shop}" th:object="${cars}">
     <select th:name="car">
         <option value="0">Select car</option>
-        <option th:each="car : ${cars}" th:value="${car}" th:text="${car}"></option>
+        <option th:each="car : ${cars}" th:value="${car}" th:text="${car.brand} + ' ' + ${car.model}"></option>
     </select>
     <input type="submit" value="Add new car">
 </form>
 <br>
 
-<a th:href="@{/shop/__${shop.shopId}__}">
+<a th:href="@{/shop/__${shop.id}__}">
     <input type="button" value="Back to cars">
 </a>
 <br>

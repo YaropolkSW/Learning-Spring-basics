@@ -10,17 +10,15 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class ShopDTO {
-    private int shopId;
+    private int id;
 
     private String shopName;
 
     public static ShopDTO of(final Shop shop) {
-        final ShopDTO shopDTO = ShopDTO.builder()
-                .shopId(shop.getShopId())
+        return ShopDTO.builder()
+                .id(shop.getId())
                 .shopName(shop.getShopName())
                 .build();
-
-        return shopDTO;
     }
 
 }

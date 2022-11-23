@@ -1,6 +1,5 @@
 package com.spring.springboot.springbootapplication.controller;
 
-import com.spring.springboot.springbootapplication.dao.ShopDAO;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
 import com.spring.springboot.springbootapplication.dto.ShopDTO;
 import com.spring.springboot.springbootapplication.service.CarService;
@@ -10,27 +9,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class ShopController {
+    private static final String SPACE_PATTERN = " ";
 
     private final ShopService shopService;
     private final CarService carService;
-    private final ShopDAO shopDAO;
 
     @Autowired
     public ShopController(
             final ShopService shopService,
-            final CarService carService,
-            final ShopDAO shopDAO
+            final CarService carService
     ) {
 
         this.shopService = shopService;
         this.carService = carService;
-        this.shopDAO = shopDAO;
     }
 
     @GetMapping("/shop/{shopId}")
@@ -53,12 +49,6 @@ public class ShopController {
                 .filter(x -> !carsInShop.contains(x))
                 .collect(Collectors.toList());
 
-        final List<String> carNames = new ArrayList<>();
-
-        for (CarDTO car : carsNotInShop) {
-            carNames.add(car.getBrand() + " " + car.getModel());
-        }
-
         final ShopDTO shopDTO = shopService.getShopById(shopId);
 
         model.addAttribute("cars", carsNotInShop);
@@ -72,15 +62,16 @@ public class ShopController {
             @PathVariable final int shopId,
             @RequestParam("car") final String carName
     ) {
-        final String brand = carName.split(" ")[0];
-        final String model = carName.split(" ")[1];
-        final List<CarDTO> cars = carService.getAllCars();
-
-        for (CarDTO car : cars) {
-            if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
-                shopDAO.saveCarInShop(shopId, car.getCarId());
-            }
+        if (carName.split(SPACE_PATTERN).length == 1) {
+            return "redirect:/shop/" + shopId;
         }
+
+        final String brand = carName.split(SPACE_PATTERN)[0];
+        final String model = carName.split(SPACE_PATTERN)[1];
+
+        carService.getAllCars().stream()
+                .filter(car -> (car.getBrand().equals(brand) && car.getModel().equals(model)))
+                .forEach(car -> shopService.saveCarInShop(shopId, car.getId()));
 
         return "redirect:/shop/" + shopId;
     }

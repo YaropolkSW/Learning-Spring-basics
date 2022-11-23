@@ -16,8 +16,8 @@ public class Shop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "shop_id")
-    private int shopId;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "shop_name")
     private String shopName;

@@ -1,33 +1,26 @@
 package com.spring.springboot.springbootapplication.controller;
 
-import com.spring.springboot.springbootapplication.dao.CarDAO;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
 import com.spring.springboot.springbootapplication.service.CarService;
-import com.spring.springboot.springbootapplication.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-
 @Controller
 public class CarController {
 
     private final CarService carService;
-    private final CarDAO carDAO;
 
     @Autowired
     public CarController(
-            final CarService carService,
-            final CarDAO carDAO
+            final CarService carService
     ) {
 
         this.carService = carService;
-        this.carDAO = carDAO;
     }
 
-    @GetMapping("/shop/{shopId}/{carId}")
+    @GetMapping("/shop/{shopId}/car/{carId}")
     public String getAdditionalInfo(@PathVariable final int shopId, @PathVariable final int carId, final Model model) {
         final CarDTO carDTO = carService.getCarById(carId);
 
@@ -45,12 +38,9 @@ public class CarController {
         return "redirect:/shop/" + shopId;
     }
 
-    @Transactional
     @DeleteMapping("/shop/all_cars/delete/{carId}")
     public String deleteCarEverywhere(@PathVariable final int carId) {
-        carDAO.deleteConnectionBetweenCarAndClient(carId);
-        carDAO.deleteConnectionBetweenCarAndEveryShop(carId);
-        carDAO.deleteById(carId);
+        carService.deleteCarEverywhere(carId);
 
         return "redirect:/shop/all_cars";
     }

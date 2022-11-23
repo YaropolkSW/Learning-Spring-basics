@@ -15,12 +15,12 @@
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
             <td>
-                <a th:href="@{/shop/__${shop.shopId}__/__${car.carId}__}">
+                <a th:href="@{/shop/__${shop.id}__/car/__${car.id}__}">
                     <input type="button" value="Info">
                 </a>
             </td>
             <td>
-                <form th:method="DELETE" th:action="@{/shop/remove/__${shop.shopId}__/__${car.carId}__}">
+                <form th:method="DELETE" th:action="@{/shop/remove/__${shop.id}__/__${car.id}__}">
                     <button type="submit">Delete</button>
                 </form>
             </td>
@@ -29,7 +29,7 @@
 </table>
 <br>
 
-<a th:href="@{/shop/__${shop.shopId}__/add_car_to_shop}">
+<a th:href="@{/shop/__${shop.id}__/add_car_to_shop}">
     <input type="button" value="Add car to shop">
 </a>
 <br>

@@ -4,7 +4,6 @@ import com.spring.springboot.springbootapplication.dao.CarDAO;
 import com.spring.springboot.springbootapplication.dao.ShopDAO;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
 import com.spring.springboot.springbootapplication.entity.Car;
-import com.spring.springboot.springbootapplication.entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,26 +31,20 @@ public class CarService {
     }
 
     public List<CarDTO> getAllCars() {
-        List<CarDTO> cars = carDAO
+        return carDAO
                 .findAll()
                 .stream()
                 .map(CarDTO::of)
                 .collect(Collectors.toList());
-
-        return cars;
     }
 
     public List<CarDTO> getCarsInShop(final int shopId) {
-        final Shop shop = shopDAO
+        return shopDAO
                 .findById(shopId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)));
-
-        final List<CarDTO> carsDTO = shop
+                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)))
                 .getCars().stream()
                 .map(CarDTO::of)
                 .collect(Collectors.toList());
-
-        return carsDTO;
     }
 
     public CarDTO getCarById(final int carId) {
@@ -66,7 +59,11 @@ public class CarService {
 
     @Transactional
     public void removeCarFromShopById(final int shopId, final int carId) {
-        carDAO.deleteConnectionBetweenCarAndClient(carId);
+        final Car car = carDAO
+                .findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
+
+        carDAO.deleteConnectionBetweenCarAndClient(car);
         carDAO.deleteConnectionBetweenCarAndShop(shopId, carId);
     }
 
@@ -81,5 +78,16 @@ public class CarService {
                 .build();
 
         carDAO.save(car);
+    }
+
+    @Transactional
+    public void deleteCarEverywhere(final int carId) {
+        final Car car = carDAO
+                .findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
+
+        carDAO.deleteConnectionBetweenCarAndClient(car);
+        carDAO.deleteConnectionBetweenCarAndEveryShop(carId);
+        carDAO.deleteById(carId);
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface CarDAO extends JpaRepository<Car, Integer> {
     @Modifying
-    @Query(value = "UPDATE client SET car_id = NULL WHERE car_id = :carId", nativeQuery = true)
-    void deleteConnectionBetweenCarAndClient(@Param("carId") final int carId);
+    @Query(value = "UPDATE Client SET clientCarId = NULL WHERE clientCarId = :car")
+    void deleteConnectionBetweenCarAndClient(@Param("car") final Car car);
 
     @Modifying
     @Query(value = "DELETE FROM shop_car WHERE car_id = :carId AND shop_id = :shopId", nativeQuery = true)

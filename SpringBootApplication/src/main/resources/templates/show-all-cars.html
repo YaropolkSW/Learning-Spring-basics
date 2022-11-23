@@ -16,7 +16,7 @@
             <td th:text="${car.ageOfProduce}"></td>
             <td th:text="${car.price}"></td>
             <td>
-                <form th:method="DELETE" th:action="@{/shop/all_cars/delete/__${car.carId}__}">
+                <form th:method="DELETE" th:action="@{/shop/all_cars/delete/__${car.id}__}">
                     <button type="submit">Delete</button>
                 </form>
             </td>
