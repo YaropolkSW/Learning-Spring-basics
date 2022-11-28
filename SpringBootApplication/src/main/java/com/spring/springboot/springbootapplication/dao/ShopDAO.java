@@ -10,6 +10,6 @@ public interface ShopDAO extends JpaRepository<Shop, Integer> {
 
     @Modifying
     @Query(value = "INSERT INTO shop_car(shop_id, car_id) VALUES(:shopId, :carId)",
-            nativeQuery = true)
+        nativeQuery = true)
     void saveCarInShop(@Param("shopId") final int shopId, @Param("carId") final int carId);
 }

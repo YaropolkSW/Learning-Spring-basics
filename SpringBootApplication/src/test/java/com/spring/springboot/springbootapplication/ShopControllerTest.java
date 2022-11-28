@@ -1,8 +1,5 @@
 package com.spring.springboot.springbootapplication;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,26 +30,26 @@ public class ShopControllerTest {
     @Test
     public void getCarsInShopShouldReturnStatus200AndExactView() throws Exception {
         mockMvc.perform(get("/shop/{shopId}", 1))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("show-cars-in-shop"));
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(view().name("show-cars-in-shop"));
     }
 
     @Test
     public void addCarToShopShouldReturnStatus200AndExactView() throws Exception {
         mockMvc.perform(get("/shop/{shopId}/add_car_to_shop", 1))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("add-new-car-in-shop"));
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(view().name("add-new-car-in-shop"));
     }
 
     @Test
     public void saveCarToShopShouldReturnStatus3xxAndRedirect() throws Exception {
         mockMvc.perform(post("/shop/{shopId}/save_car_to_shop", 1)
-                        .param("car", "Chevrolet Camaro"))
-                .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/shop/1"));
+            .param("car", "Chevrolet Camaro"))
+            .andDo(print())
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/shop/1"));
     }
 
 }

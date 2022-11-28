@@ -21,8 +21,8 @@ public class ShopController {
 
     @Autowired
     public ShopController(
-            final ShopService shopService,
-            final CarService carService
+        final ShopService shopService,
+        final CarService carService
     ) {
 
         this.shopService = shopService;
@@ -44,10 +44,10 @@ public class ShopController {
     public String addCarToShop(@PathVariable final int shopId, final Model model) {
         final List<CarDTO> carsInShop = carService.getCarsInShop(shopId);
         final List<CarDTO> carsNotInShop = carService
-                .getAllCars()
-                .stream()
-                .filter(x -> !carsInShop.contains(x))
-                .collect(Collectors.toList());
+            .getAllCars()
+            .stream()
+            .filter(x -> !carsInShop.contains(x))
+            .collect(Collectors.toList());
 
         final ShopDTO shopDTO = shopService.getShopById(shopId);
 
@@ -59,8 +59,8 @@ public class ShopController {
 
     @PostMapping("/shop/{shopId}/save_car_to_shop")
     public String saveCarToShop(
-            @PathVariable final int shopId,
-            @RequestParam("car") final String carName
+        @PathVariable final int shopId,
+        @RequestParam("car") final String carName
     ) {
         if (carName.split(SPACE_PATTERN).length == 1) {
             return "redirect:/shop/" + shopId;
@@ -70,8 +70,8 @@ public class ShopController {
         final String model = carName.split(SPACE_PATTERN)[1];
 
         carService.getAllCars().stream()
-                .filter(car -> (car.getBrand().equals(brand) && car.getModel().equals(model)))
-                .forEach(car -> shopService.saveCarInShop(shopId, car.getId()));
+            .filter(car -> (car.getBrand().equals(brand) && car.getModel().equals(model)))
+            .forEach(car -> shopService.saveCarInShop(shopId, car.getId()));
 
         return "redirect:/shop/" + shopId;
     }

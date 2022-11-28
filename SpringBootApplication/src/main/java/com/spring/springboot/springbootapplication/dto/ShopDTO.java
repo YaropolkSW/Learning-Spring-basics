@@ -16,9 +16,9 @@ public class ShopDTO {
 
     public static ShopDTO of(final Shop shop) {
         return ShopDTO.builder()
-                .id(shop.getId())
-                .shopName(shop.getShopName())
-                .build();
+            .id(shop.getId())
+            .shopName(shop.getShopName())
+            .build();
     }
 
 }

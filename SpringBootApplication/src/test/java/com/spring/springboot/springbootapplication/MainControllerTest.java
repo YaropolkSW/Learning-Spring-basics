@@ -31,39 +31,39 @@ public class MainControllerTest {
     @Test
     public void getAllShopsShouldReturnStatus200AndExactView() throws Exception {
         mockMvc.perform(get("/shop"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("show-all-shops"));
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(view().name("show-all-shops"));
     }
 
     @Test
     public void getAllCarsShouldReturnStatus200AndExactView() throws Exception {
         mockMvc.perform(get("/shop/all_cars"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("show-all-cars"));
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(view().name("show-all-cars"));
     }
 
     @Test
     public void addNewCarShouldReturnStatus200AndExactView() throws Exception {
         mockMvc.perform(get("/shop/all_cars/add_new_car"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("add-new-car"));
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(view().name("add-new-car"));
     }
 
     @Test
     public void saveNewCarShouldReturnStatus3xxAndRedirect() throws Exception {
         final CarDTO carDTO = CarDTO.builder()
-                .brand("Subaru")
-                .model("XV")
-                .ageOfProduce(2022)
-                .price(4000000)
-                .build();
+            .brand("Subaru")
+            .model("XV")
+            .ageOfProduce(2022)
+            .price(4000000)
+            .build();
 
         mockMvc.perform(post("/shop/all_cars/save_new_car").flashAttr("car", carDTO))
-                .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/shop/all_cars"));
+            .andDo(print())
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/shop/all_cars"));
     }
 }

@@ -32,11 +32,11 @@ public class Car {
     private int price;
 
     @ManyToMany(cascade = {CascadeType.PERSIST,
-            CascadeType.DETACH,
-            CascadeType.REFRESH,
-            CascadeType.MERGE})
+        CascadeType.DETACH,
+        CascadeType.REFRESH,
+        CascadeType.MERGE})
     @JoinTable(name = "shop_car",
-            joinColumns = @JoinColumn(name = "car_id"),
-            inverseJoinColumns = @JoinColumn(name = "shop_id"))
+        joinColumns = @JoinColumn(name = "car_id"),
+        inverseJoinColumns = @JoinColumn(name = "shop_id"))
     private List<Shop> shops;
 }

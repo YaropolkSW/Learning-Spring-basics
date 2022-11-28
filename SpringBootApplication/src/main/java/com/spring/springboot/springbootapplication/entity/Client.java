@@ -25,9 +25,9 @@ public class Client {
     private String clientCity;
 
     @OneToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.DETACH,
-            CascadeType.REFRESH,
-            CascadeType.MERGE})
+        CascadeType.DETACH,
+        CascadeType.REFRESH,
+        CascadeType.MERGE})
     @JoinColumn(name = "car_id")
     private Car clientCarId;
 }
