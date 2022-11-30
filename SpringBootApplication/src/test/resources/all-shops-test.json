@@ -1,0 +1,18 @@
+[
+  {
+    "id":1,
+    "shopName":"Subaru Official Dealer"
+  },
+  {
+    "id":2,
+    "shopName":"Chevrolet Official Dealer"
+  },
+  {
+    "id":3,
+    "shopName":"Kia Official Dealer"
+  },
+  {
+    "id":4,
+    "shopName":"Trade-In Dealer"
+  }
+]

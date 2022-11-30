@@ -1,0 +1,23 @@
+[
+  {
+    "id":1,
+    "brand":"Subaru",
+    "model":"Outback",
+    "ageOfProduce":2022,
+    "price":6000000
+  },
+  {
+    "id":2,
+    "brand":"Subaru",
+    "model":"Forester",
+    "ageOfProduce":2021,
+    "price":4000000
+  },
+  {
+    "id":8,
+    "brand":"Nissan",
+    "model":"Juke",
+    "ageOfProduce":2014,
+    "price":1000000
+  }
+]
