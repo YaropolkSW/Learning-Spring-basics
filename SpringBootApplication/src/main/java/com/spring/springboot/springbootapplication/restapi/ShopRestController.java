@@ -1,4 +1,4 @@
-package com.spring.springboot.springbootapplication.controller;
+package com.spring.springboot.springbootapplication.restapi;
 
 import com.spring.springboot.springbootapplication.dto.CarDTO;
 import com.spring.springboot.springbootapplication.service.CarService;

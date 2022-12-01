@@ -2,7 +2,7 @@ package com.spring.springboot.springbootapplication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.spring.springboot.springbootapplication.controller.MainRestController;
+import com.spring.springboot.springbootapplication.restapi.MainRestController;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
 import org.junit.Assert;
 import org.junit.Test;
