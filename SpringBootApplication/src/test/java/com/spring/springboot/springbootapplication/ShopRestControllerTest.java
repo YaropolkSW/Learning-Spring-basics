@@ -15,10 +15,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,34 +32,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/schema-test-start.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "/schema-test-end.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ShopRestControllerTest {
+    private final static String EMPTY_LINE = "";
+    private final static String PATH_TO_CARS_IN_SHOP_JSON = "src/test/resources/cars-in-shop-test.json";
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getCarsInShopShouldReturnStatus200AndCorrectJSON() throws Exception {
-        final StringBuilder builder = new StringBuilder();
-
-        try (final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(
-            new FileInputStream("src/test/resources/cars-in-shop-test.json")))
-        ) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final String json = String.join(EMPTY_LINE, Files.readAllLines(Paths.get(PATH_TO_CARS_IN_SHOP_JSON)));
 
         this.mockMvc.perform(get("/api/shops/{shopId}", 1))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().json(builder.toString()));
+            .andExpect((content().json(json)));
     }
 
-    @Test//Should somehow check if car has been added to shop
+    @Test
     public void saveCarToShopShouldReturnStatus200AndCorrectJSON() throws Exception {
         final CarDTO carDTO = CarDTO.builder()
             .brand("Subaru")

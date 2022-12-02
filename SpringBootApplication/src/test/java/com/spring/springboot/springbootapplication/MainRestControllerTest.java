@@ -2,8 +2,8 @@ package com.spring.springboot.springbootapplication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.spring.springboot.springbootapplication.restapi.MainRestController;
 import com.spring.springboot.springbootapplication.dto.CarDTO;
+import com.spring.springboot.springbootapplication.restapi.MainRestController;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +17,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +34,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/schema-test-start.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "/schema-test-end.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class MainRestControllerTest {
+    private final static String EMPTY_LINE = "";
+    private final static String PATH_TO_ALL_SHOPS_JSON = "src/test/resources/all-shops-test.json";
+    private final static String PATH_TO_ALL_CARS_JSON = "src/test/resources/all-cars-test.json";
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,48 +45,22 @@ public class MainRestControllerTest {
 
     @Test
     public void getAllShopsShouldReturnStatus200AndCorrectJSON() throws Exception {
-        final StringBuilder builder = new StringBuilder();
-
-        try (final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(
-            new FileInputStream("src/test/resources/all-shops-test.json"))))
-        {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final String json = String.join(EMPTY_LINE, Files.readAllLines(Paths.get(PATH_TO_ALL_SHOPS_JSON)));
 
         this.mockMvc.perform(get("/api/shops"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().json(builder.toString()));
+            .andExpect(content().json(json));
     }
 
     @Test
     public void getAllCarsShouldReturnStatus200AndCorrectJSON() throws Exception {
-        final StringBuilder builder = new StringBuilder();
-
-        try (final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(
-                new FileInputStream("src/test/resources/all-cars-test.json"))))
-        {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final String json = String.join(EMPTY_LINE, Files.readAllLines(Paths.get(PATH_TO_ALL_CARS_JSON)));
 
         this.mockMvc.perform(get("/api/cars"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().json(builder.toString()));
+            .andExpect(content().json(json));
     }
 
     @Test

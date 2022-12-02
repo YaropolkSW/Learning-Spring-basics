@@ -1,9 +1,12 @@
 package com.spring.springboot.springbootapplication.restapi;
 
 import com.spring.springboot.springbootapplication.dto.CarDTO;
+import com.spring.springboot.springbootapplication.response.DeleteCarResponse;
+import com.spring.springboot.springbootapplication.response.RemoveCarFromShopResponse;
 import com.spring.springboot.springbootapplication.service.CarService;
 import com.spring.springboot.springbootapplication.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,21 +29,22 @@ public class CarRestController {
         return carService.getCarById(id);
     }
 
-    @DeleteMapping("/shops/{shopId}/cars/{carId}")
-    public String removeCarFromShopById(
+    @DeleteMapping(value = "/shops/{shopId}/cars/{carId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RemoveCarFromShopResponse removeCarFromShopById(
         @PathVariable("shopId") final int shopId,
         @PathVariable("carId") final int carId
     ) {
         carService.removeCarFromShopById(shopId, carId);
 
-        return "Car with id = " + carId + " was removed from shop "
-            + shopService.getShopById(shopId).getShopName() + ".";
+        return new RemoveCarFromShopResponse(carId, shopId, "Car " + carService.getCarById(carId).toString()
+            + " was removed from shop " + shopService.getShopById(shopId).getShopName() + ".");
     }
 
-    @DeleteMapping("/cars/{carId}")
-    public String deleteCarEverywhere(@PathVariable("carId") final int carId) {
+    @DeleteMapping(value = "/cars/{carId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public DeleteCarResponse deleteCarEverywhere(@PathVariable("carId") final int carId) {
+        final String carName = carService.getCarById(carId).toString();
         carService.deleteCarEverywhere(carId);
 
-        return "Car with id = " + carId + " was deleted.";
+        return new DeleteCarResponse(carId, "Car " + carName + " was deleted.");
     }
 }
