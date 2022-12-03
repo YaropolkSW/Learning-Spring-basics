@@ -20,22 +20,22 @@ public class ShopService {
 
     @Autowired
     public ShopService(
-            final ShopDAO shopDAO
+        final ShopDAO shopDAO
     ) {
         this.shopDAO = shopDAO;
     }
 
     public List<ShopDTO> getAllShops() {
         return shopDAO
-                .findAll().stream()
-                .map(ShopDTO::of)
-                .collect(Collectors.toList());
+            .findAll().stream()
+            .map(ShopDTO::of)
+            .collect(Collectors.toList());
     }
 
     public ShopDTO getShopById(final int shopId) {
         final Shop shop = shopDAO
-                .findById(shopId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)));
+            .findById(shopId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)));
 
         final ShopDTO shopDTO = ShopDTO.of(shop);
 

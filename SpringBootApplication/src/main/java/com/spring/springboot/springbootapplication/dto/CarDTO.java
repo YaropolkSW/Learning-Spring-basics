@@ -29,12 +29,12 @@ public class CarDTO {
 
     public static CarDTO of(final Car car) {
         return CarDTO.builder()
-                .id(car.getId())
-                .brand(car.getBrand())
-                .model(car.getModel())
-                .ageOfProduce(car.getAgeOfProduce())
-                .price(car.getPrice())
-                .build();
+            .id(car.getId())
+            .brand(car.getBrand())
+            .model(car.getModel())
+            .ageOfProduce(car.getAgeOfProduce())
+            .price(car.getPrice())
+            .build();
     }
 
     @Override

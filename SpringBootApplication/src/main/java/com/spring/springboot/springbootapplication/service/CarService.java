@@ -23,8 +23,8 @@ public class CarService {
 
     @Autowired
     public CarService(
-            final CarDAO carDAO,
-            final ShopDAO shopDAO
+        final CarDAO carDAO,
+        final ShopDAO shopDAO
     ) {
         this.carDAO = carDAO;
         this.shopDAO = shopDAO;
@@ -32,25 +32,25 @@ public class CarService {
 
     public List<CarDTO> getAllCars() {
         return carDAO
-                .findAll()
-                .stream()
-                .map(CarDTO::of)
-                .collect(Collectors.toList());
+            .findAll()
+            .stream()
+            .map(CarDTO::of)
+            .collect(Collectors.toList());
     }
 
     public List<CarDTO> getCarsInShop(final int shopId) {
         return shopDAO
-                .findById(shopId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)))
-                .getCars().stream()
-                .map(CarDTO::of)
-                .collect(Collectors.toList());
+            .findById(shopId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_SHOP_EXC_MESSAGE, shopId)))
+            .getCars().stream()
+            .map(CarDTO::of)
+            .collect(Collectors.toList());
     }
 
     public CarDTO getCarById(final int carId) {
         final Car car = carDAO
-                .findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
+            .findById(carId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
 
         final CarDTO carDTO = CarDTO.of(car);
 
@@ -60,8 +60,8 @@ public class CarService {
     @Transactional
     public void removeCarFromShopById(final int shopId, final int carId) {
         final Car car = carDAO
-                .findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
+            .findById(carId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
 
         carDAO.deleteConnectionBetweenCarAndClient(car);
         carDAO.deleteConnectionBetweenCarAndShop(shopId, carId);
@@ -71,11 +71,11 @@ public class CarService {
     public void saveNewCar(final CarDTO carDTO) {
 
         final Car car = Car.builder()
-                .brand(carDTO.getBrand())
-                .model(carDTO.getModel())
-                .ageOfProduce(carDTO.getAgeOfProduce())
-                .price(carDTO.getPrice())
-                .build();
+            .brand(carDTO.getBrand())
+            .model(carDTO.getModel())
+            .ageOfProduce(carDTO.getAgeOfProduce())
+            .price(carDTO.getPrice())
+            .build();
 
         carDAO.save(car);
     }
@@ -83,8 +83,8 @@ public class CarService {
     @Transactional
     public void deleteCarEverywhere(final int carId) {
         final Car car = carDAO
-                .findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
+            .findById(carId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format(NO_SUCH_CAR_EXC_MESSAGE, carId)));
 
         carDAO.deleteConnectionBetweenCarAndClient(car);
         carDAO.deleteConnectionBetweenCarAndEveryShop(carId);

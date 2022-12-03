@@ -20,8 +20,8 @@ public class MainController {
 
     @Autowired
     public MainController(
-            final CarService carService,
-            final ShopService shopService
+        final CarService carService,
+        final ShopService shopService
     ) {
 
         this.carService = carService;
@@ -55,8 +55,8 @@ public class MainController {
 
     @PostMapping("/shop/all_cars/save_new_car")
     public String saveNewCar(
-            @ModelAttribute("car") @Valid final CarDTO car,
-            final BindingResult result
+        @ModelAttribute("car") @Valid final CarDTO car,
+        final BindingResult result
     ) {
 
         if (result.hasErrors()) {
