@@ -1,6 +1,7 @@
 package com.spring.springboot.springbootapplication.restapi;
 
 import com.spring.springboot.springbootapplication.dto.CarDTO;
+import com.spring.springboot.springbootapplication.dto.ShopDTO;
 import com.spring.springboot.springbootapplication.service.CarService;
 import com.spring.springboot.springbootapplication.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/shops")
 public class ShopRestController {
     private final CarService carService;
     private final ShopService shopService;
@@ -23,12 +24,17 @@ public class ShopRestController {
         this.shopService = shopService;
     }
 
-    @GetMapping("/shops/{shopId}")
+    @GetMapping("/")
+    public List<ShopDTO> getAllShops() {
+        return shopService.getAllShops();
+    }
+
+    @GetMapping("/{shopId}")
     public List<CarDTO> getCarsInShop(@PathVariable("shopId") final int shopId) {
         return carService.getCarsInShop(shopId);
     }
 
-    @PostMapping("/shop/{shopId}")
+    @PostMapping("/{shopId}")
     public CarDTO saveCarToShop(
         @PathVariable("shopId") final int shopId,
         @RequestBody final CarDTO carDTO

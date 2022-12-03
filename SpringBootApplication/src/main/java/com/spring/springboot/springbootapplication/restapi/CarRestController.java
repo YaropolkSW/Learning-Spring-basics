@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cars")
 public class CarRestController {
     private final CarService carService;
     private final ShopService shopService;
@@ -24,12 +26,24 @@ public class CarRestController {
         this.shopService = shopService;
     }
 
-    @GetMapping("/cars/{id}")
+    @GetMapping("/{id}")
     public CarDTO getAdditionalInfo(@PathVariable("id") final int id) {
         return carService.getCarById(id);
     }
 
-    @DeleteMapping(value = "/shops/{shopId}/cars/{carId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/")
+    public List<CarDTO> getAllCars() {
+        return carService.getAllCars();
+    }
+
+    @PostMapping("/")
+    public CarDTO saveNewCar(@RequestBody CarDTO carDTO) {
+        carService.saveNewCar(carDTO);
+
+        return carDTO;
+    }
+
+    @DeleteMapping(value = "/{carId}/shops/{shopId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RemoveCarFromShopResponse removeCarFromShopById(
         @PathVariable("shopId") final int shopId,
         @PathVariable("carId") final int carId
@@ -40,7 +54,7 @@ public class CarRestController {
             + " was removed from shop " + shopService.getShopById(shopId).getShopName() + ".");
     }
 
-    @DeleteMapping(value = "/cars/{carId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{carId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public DeleteCarResponse deleteCarEverywhere(@PathVariable("carId") final int carId) {
         final String carName = carService.getCarById(carId).toString();
         carService.deleteCarEverywhere(carId);

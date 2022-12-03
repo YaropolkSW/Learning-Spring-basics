@@ -33,10 +33,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/schema-test-end.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ShopRestControllerTest {
     private final static String EMPTY_LINE = "";
+    private final static String PATH_TO_ALL_SHOPS_JSON = "src/test/resources/all-shops-test.json";
     private final static String PATH_TO_CARS_IN_SHOP_JSON = "src/test/resources/cars-in-shop-test.json";
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    public void getAllShopsShouldReturnStatus200AndCorrectJSON() throws Exception {
+        final String json = String.join(EMPTY_LINE, Files.readAllLines(Paths.get(PATH_TO_ALL_SHOPS_JSON)));
+
+        this.mockMvc.perform(get("/api/shops/"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().json(json));
+    }
 
     @Test
     public void getCarsInShopShouldReturnStatus200AndCorrectJSON() throws Exception {
@@ -60,7 +71,7 @@ public class ShopRestControllerTest {
         final ObjectWriter writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
         final String json = writer.writeValueAsString(carDTO);
 
-        this.mockMvc.perform(post("/api/shop/{shopId}", 1)
+        this.mockMvc.perform(post("/api/shops/{shopId}", 1)
             .contentType(MediaType.APPLICATION_JSON).content(json))
             .andExpect(status().isOk());
     }
